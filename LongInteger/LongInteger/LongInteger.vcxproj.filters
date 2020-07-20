@@ -18,5 +18,31 @@
     <ClCompile Include="main.cpp">
       <Filter>資源檔</Filter>
     </ClCompile>
+    <ClCompile Include="AddOperate.cpp">
+      <Filter>資源檔</Filter>
+    </ClCompile>
+    <ClCompile Include="SubOperate.cpp">
+      <Filter>資源檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Caculator.cpp">
+      <Filter>資源檔</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CaculateInterface.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="BigNumber.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="AddOperate.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="SubOperate.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Caculator.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

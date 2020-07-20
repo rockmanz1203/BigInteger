@@ -1,2 +1,6 @@
-﻿  main.cpp
+﻿  AddOperate.cpp
+  Caculator.cpp
+  SubOperate.cpp
+  main.cpp
+  正在產生程式碼...
   LongInteger.vcxproj -> C:\Users\travis.wang\Documents\C++練習\第三題\LongInteger\Debug\LongInteger.exe

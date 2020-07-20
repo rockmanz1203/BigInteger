@@ -1,125 +1,205 @@
 #include <iostream>
+#include "BigNumber.h"
+#include "CaculateInterface.h"
+#include "AddOperate.h"
+#include "SubOperate.h"
+#include "Caculator.h"
+
 #define SIZE 50
 
 using namespace std;
 
-class BigNumber {
-public:
-	int Integer1[SIZE] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1 };
-	int Integer2[SIZE] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
 
-	int Result[SIZE] = { 0 };//result
-	bool isPositiveInt_1 = true;
-	bool isPositiveInt_2 = true;
-};
+int One[SIZE] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
 
-class CaculateInterface 
-{
-public:
-	virtual void Execute() = 0;
-	virtual void SetInt(BigNumber* Data) = 0;
+void Add(BigNumber* data);
+void Subtract(BigNumber* data);
+void Multiply(BigNumber* data);
+void Divide(BigNumber* data);
 
-};
+bool AbsCompare(BigNumber* data) {
+	int borrow = 0;//借位
+	for (int i = SIZE - 1; i >= 0; i--)
+	{
+		data->Result[i] = data->Integer1[i] - data->Integer2[i] - borrow;//執行減法
 
-class AddOperate : public CaculateInterface //繼承自規格
-{
-public:
-	void Execute() {
-		cout<<"加法執行成功"<<endl;
-		
-		if (data->isPositiveInt_2 == false) {
-			//如果輸入減數為負
-
-		}
+		if (data->Result[i] >= 0) borrow = 0;//減出來結果是正的，不需藉位
 		else {
-			//如果兩者為正
-			int Carry = 0;//進位
-			for (int i = SIZE - 1; i >= 0; i--) 
-			{
-				data->Result[i] = data-> Integer1[i] + data-> Integer2[i] + Carry;
+			borrow = 1;
+			data->Result[i] = data->Result[i] + 10;
+		}
+	}
+	//A是否比B大
+	if (data->Result[0] == 9) 
+	{//否 A比B小
+		cout << "絕對值比較 A比B小" << endl;
+		return false;
+	}
+	else
+	{//是 A比B大
+		cout << "絕對值比較 A比B大" << endl;
+		return true;
+	}
+}
 
-				if (data->Result[i] < 10)  Carry = 0;
-				else {
-					//進位
-					data->Result[i] = data->Result[i]-10;
-					Carry = 1;
-				}
+
+void Add(BigNumber* data) {
+	if (data->isPositiveInt_1 == true && data->isPositiveInt_2 == true) 
+	{	//Test後OK
+		//7+5
+		//如果兩者為正
+		int Carry = 0;//進位
+		for (int i = SIZE - 1; i >= 0; i--)
+		{
+			data->Result[i] = data->Integer1[i] + data->Integer2[i] + Carry;
+
+			if (data->Result[i] < 10)  Carry = 0;
+			else {
+				//進位
+				data->Result[i] = data->Result[i] - 10;
+				Carry = 1;
 			}
 		}
 	}
-	void SetInt(BigNumber* Data) 
-	{
-		data = Data;	
+	if (data->isPositiveInt_1 == true && data->isPositiveInt_2 == false) 
+	{	//Test後OK
+		//7+-5
+		data->isPositiveInt_2 = true;
+		Subtract(data);//7-5
 	}
-	BigNumber* data;
-};
-class SubOperate : public CaculateInterface //繼承自規格
-{
-public:
-	void Execute() {
-		cout << "減法執行成功" << endl;
-		if (data->isPositiveInt_2 == false) 
-		{
-			//如果輸入減數為負
-		}
-		else {
+	if (data->isPositiveInt_1 == false && data->isPositiveInt_2 == true) 
+	{
 			int borrow = 0;//借位
 			for (int i = SIZE - 1; i >= 0; i--)
 			{
-				data->Result[i] = data->Integer1[i] - data->Integer2[i] - borrow;
-				if (data->Result[i] >= 0) borrow = 0;
+				data->Result[i] = data->Integer2[i] - data->Integer1[i] - borrow;//執行減法
+
+				if (data->Result[i] >= 0) borrow = 0;//減出來結果是正的，不需藉位
 				else {
 					borrow = 1;
 					data->Result[i] = data->Result[i] + 10;
 				}
 			}
+			if (data->Result[0] == 9)
+			{
+				data->isPositibeResult = false;//設為負值
+
+				//處理數值
+				for (int i = 0; i < SIZE; i++)
+				{
+					data->Result[i] = 9 - data->Result[i];
+				}
+				data->Result[SIZE - 1]++;
+
+			}
+	}
+	if (data->isPositiveInt_1 == false && data->isPositiveInt_2 == false) {
+		int Carry = 0;//進位
+		for (int i = SIZE - 1; i >= 0; i--)
+		{
+			data->Result[i] = data->Integer1[i] + data->Integer2[i] + Carry;
+
+			if (data->Result[i] < 10)  Carry = 0;
+			else {
+				//進位
+				data->Result[i] = data->Result[i] - 10;
+				Carry = 1;
+			}
+		}
+		data->isPositibeResult = false;
+	}
+}
+
+void Subtract(BigNumber* data) {
+	if (data->isPositiveInt_1 == true && data->isPositiveInt_2 == true) //正-正 處理可能為負的print狀況
+	{
+		//Test後OK
+		int borrow = 0;//借位
+		//減
+		for (int i = SIZE - 1; i >= 0; i--)
+		{
+			data->Result[i] = data->Integer1[i] - data->Integer2[i] - borrow;//執行減法
+
+			if (data->Result[i] >= 0) borrow = 0;//減出來結果是正的，不需藉位
+			else {
+				borrow = 1;
+				data->Result[i] = data->Result[i] + 10;
+			}
+		}
+		//處理為負 如果A-b出來為負? 5-6
+		if (data->Result[0] == 9) 
+		{
+			data->isPositibeResult = false;//設為負值
+
+			//處理數值
+			for (int i = 0; i < SIZE; i++) 
+			{
+				data->Result[i] = 9 - data->Result[i];
+			}
+			data->Result[SIZE-1]++;
+
+		}
+
+	}
+	if (data->isPositiveInt_1 == true && data->isPositiveInt_2 == false) 
+	{//5-(-6)
+		//Test後OK
+		//變號
+		data->isPositiveInt_2 = true;
+		Add(data);
+	}
+	if (data->isPositiveInt_1 == false && data->isPositiveInt_2 == true) {
+		//-4-5
+		int Carry = 0;//進位
+		for (int i = SIZE - 1; i >= 0; i--)
+		{
+			data->Result[i] = data->Integer1[i] + data->Integer2[i] + Carry;
+
+			if (data->Result[i] < 10)  Carry = 0;
+			else {
+				//進位
+				data->Result[i] = data->Result[i] - 10;
+				Carry = 1;
+			}
+		}
+		data->isPositibeResult = false;
+	}
+	if (data->isPositiveInt_1 == false && data->isPositiveInt_2 == false) {
+		int borrow = 0;//借位
+		for (int i = SIZE - 1; i >= 0; i--)
+		{
+			data->Result[i] = data->Integer2[i] - data->Integer1[i] - borrow;//執行減法
+
+			if (data->Result[i] >= 0) borrow = 0;//減出來結果是正的，不需藉位
+			else {
+				borrow = 1;
+				data->Result[i] = data->Result[i] + 10;
+			}
+		}
+		if (data->Result[0] == 9)
+		{
+			data->isPositibeResult = false;//設為負值
+
+			//處理數值
+			for (int i = 0; i < SIZE; i++)
+			{
+				data->Result[i] = 9 - data->Result[i];
+			}
+			data->Result[SIZE - 1]++;
+
 		}
 	}
-	void SetInt(BigNumber* Data) {
-		data = Data;
-	}
-	BigNumber* data;
-};
+}
 
-//可以換裝功能的計算機
-class Caculator 
-{
-public:
-	//執行裝入的功能
-	void Execute()
-	{
-		CaculateOperator->Execute();
-	}
-	//抽換功能
-	void SetOperator(CaculateInterface* CaculateFunction) {
-		CaculateOperator = CaculateFunction;
-	}
-	void SetOperatorInt(BigNumber* Data)
-	{
-		CaculateOperator->SetInt(Data);
-		CaculateData = Data;
-	}
-	void Show() {
-		for (int i = 0; i < SIZE; i++) {
-			cout << CaculateData->Result[i];
-			CaculateData->Result[i] = 0;//計算完畢 清空
-		}
-		cout << endl;
-	}
 
-private:
-	CaculateInterface* CaculateOperator;
-	BigNumber* CaculateData;
-};
 
 int main() {
 
 	BigNumber* Data = new BigNumber;
+	AbsCompare(Data);
 	
-
 	AddOperate* addFunction = new AddOperate();//加的功能 用new的
 	SubOperate* subFunction = new SubOperate();
-
 
 	/*
 	Caculator使用方法:
@@ -139,9 +219,11 @@ int main() {
 	caculator-> Show();
 	//caculator-> Show(); //測試，確定清空會連動
 
+
+	BigNumber* Data2 = new BigNumber;
 	//減法
 	caculator->SetOperator(subFunction);
-	caculator->SetOperatorInt(Data);
+	caculator->SetOperatorInt(Data2);
 	caculator->Execute();
 	caculator->Show();
 	
