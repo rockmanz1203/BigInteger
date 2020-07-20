@@ -126,6 +126,7 @@
     <ClCompile Include="AddOperate.cpp" />
     <ClCompile Include="Caculator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MultiplyOperate.cpp" />
     <ClCompile Include="SubOperate.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +134,7 @@
     <ClInclude Include="BigNumber.h" />
     <ClInclude Include="CaculateInterface.h" />
     <ClInclude Include="Caculator.h" />
+    <ClInclude Include="MultiplyOperate.h" />
     <ClInclude Include="SubOperate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

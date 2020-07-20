@@ -27,6 +27,9 @@
     <ClCompile Include="Caculator.cpp">
       <Filter>資源檔</Filter>
     </ClCompile>
+    <ClCompile Include="MultiplyOperate.cpp">
+      <Filter>資源檔</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CaculateInterface.h">
@@ -42,6 +45,9 @@
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="Caculator.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiplyOperate.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
   </ItemGroup>

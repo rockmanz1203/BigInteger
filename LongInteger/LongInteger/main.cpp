@@ -3,6 +3,7 @@
 #include "CaculateInterface.h"
 #include "AddOperate.h"
 #include "SubOperate.h"
+#include "MultiplyOperate.h"
 #include "Caculator.h"
 
 #define SIZE 50
@@ -41,8 +42,6 @@ bool AbsCompare(BigNumber* data) {
 		return true;
 	}
 }
-
-
 void Add(BigNumber* data) {
 	if (data->isPositiveInt_1 == true && data->isPositiveInt_2 == true) 
 	{	//Test後OK
@@ -200,6 +199,7 @@ int main() {
 	
 	AddOperate* addFunction = new AddOperate();//加的功能 用new的
 	SubOperate* subFunction = new SubOperate();
+	MultiplyOperate* multiplyFunction = new MultiplyOperate();
 
 	/*
 	Caculator使用方法:
@@ -219,6 +219,7 @@ int main() {
 	caculator-> Show();
 	//caculator-> Show(); //測試，確定清空會連動
 
+	cout << endl;
 
 	BigNumber* Data2 = new BigNumber;
 	//減法
@@ -227,8 +228,16 @@ int main() {
 	caculator->Execute();
 	caculator->Show();
 	
-	
+	cout << endl;
 
+	//直式乘法
+	BigNumber* Data3 = new BigNumber;
+	caculator->SetOperator(multiplyFunction);
+	caculator->SetOperatorInt(Data3);
+	caculator->Execute();
+	caculator->Show();
+
+	cout << endl;
 
 	system("pause");
 
