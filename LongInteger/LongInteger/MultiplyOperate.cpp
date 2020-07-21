@@ -10,7 +10,7 @@ void Divide(BigNumber* data);
 
 void MultiplyOperate::Execute()
 {
-	cout << "­¼ªkµ¦²¤°õ¦æ¦¨¥\" << endl;
+	cout << "ä¹˜æ³•ç­–ç•¥åŸ·è¡ŒæˆåŠŸ" << endl;
 	//Add(data);
 	//+5*-4 = -20
 	if (data->isPositiveInt_1 != data->isPositiveInt_2) 
@@ -26,24 +26,27 @@ void MultiplyOperate::Execute()
 	int j = 0;
 	int resultIndex = SIZE - 1;
 	
-	for (int j = SIZE - 1; j >= 0; j--) {//B¼Æindex ­¼¼Æint_2
+	for (int j = SIZE - 1; j >= 0; j--) {//Bæ•¸index ä¹˜æ•¸int_2
 		carry = 0;
 		resultIndex = j;
 		for (int i = SIZE - 1; i >= 0; i--) 
 		{
 			
-			//A¼Æindex ³Q­¼¼Æ int_1
+			//Aæ•¸index è¢«ä¹˜æ•¸ int_1
 			temp = data->Integer1[i] * data->Integer2[j] + data->Result[resultIndex] + carry;
-			//¦³°ÝÃD¡A³o¼Ë²Ä¤@¦ì·|¬OA[49]*B[49]=>result[98]
-			//¦ý¬O¨S¦³[98]³o­ÓindexªÅ¶¡ ©Ò¥H¤£¯à¥Î[i+j]³o­Ó¤èªk¨Ó¦s
+			//æœ‰å•é¡Œï¼Œé€™æ¨£ç¬¬ä¸€ä½æœƒæ˜¯A[49]*B[49]=>result[98]
+			//ä½†æ˜¯æ²’æœ‰[98]é€™å€‹indexç©ºé–“ æ‰€ä»¥ä¸èƒ½ç”¨[i+j]é€™å€‹æ–¹æ³•ä¾†å­˜
 
 			carry = temp / 10;
+			if (resultIndex >= 0)
+			{
+				//è¶…å‡º50ä½çš„å°±ä¸è™•ç†äº†
 			data->Result[resultIndex] = temp % 10;
 			resultIndex--;
 			//cout << temp << endl;
-			
+			}
 		}
-		//cout << "¥X°j°é" << endl;
+		//cout << "å‡ºè¿´åœˆ" << endl;
 	}
 
 }
