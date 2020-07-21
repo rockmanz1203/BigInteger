@@ -1,5 +1,6 @@
 ﻿  AddOperate.cpp
   Caculator.cpp
+  DivideOperate.cpp
   MultiplyOperate.cpp
   SubOperate.cpp
   main.cpp

@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="AddOperate.cpp" />
     <ClCompile Include="Caculator.cpp" />
+    <ClCompile Include="DivideOperate.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MultiplyOperate.cpp" />
     <ClCompile Include="SubOperate.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="BigNumber.h" />
     <ClInclude Include="CaculateInterface.h" />
     <ClInclude Include="Caculator.h" />
+    <ClInclude Include="DivideOperate.h" />
     <ClInclude Include="MultiplyOperate.h" />
     <ClInclude Include="SubOperate.h" />
   </ItemGroup>

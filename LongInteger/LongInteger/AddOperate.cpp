@@ -6,6 +6,7 @@ void Add(BigNumber* data);
 void Subtract(BigNumber* data);
 void Multiply(BigNumber* data);
 void Divide(BigNumber* data);
+//int One[SIZE] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
 
 void AddOperate::Execute() 
 {

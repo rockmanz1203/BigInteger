@@ -1,9 +1,12 @@
 #include <iostream>
 #include "BigNumber.h"
 #include "CaculateInterface.h"
+
 #include "AddOperate.h"
 #include "SubOperate.h"
 #include "MultiplyOperate.h"
+#include "DivideOperate.h"
+
 #include "Caculator.h"
 
 #define SIZE 50
@@ -11,37 +14,44 @@
 using namespace std;
 
 
-int One[SIZE] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
+//int One[SIZE] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 };
 
 void Add(BigNumber* data);
 void Subtract(BigNumber* data);
-void Multiply(BigNumber* data);
-void Divide(BigNumber* data);
 
+//int TestResult[SIZE] = { 0 };
 bool AbsCompare(BigNumber* data) {
+
 	int borrow = 0;//借位
+	int TestResult[SIZE] = { 0 };
 	for (int i = SIZE - 1; i >= 0; i--)
 	{
-		data->Result[i] = data->Integer1[i] - data->Integer2[i] - borrow;//執行減法
+		TestResult[i] = data->Integer1[i] - data->Integer2[i] - borrow;//執行減法
 
-		if (data->Result[i] >= 0) borrow = 0;//減出來結果是正的，不需藉位
+		if (TestResult[i] >= 0) borrow = 0;//減出來結果是正的，不需藉位
 		else {
+			
+			TestResult[i] = TestResult[i] + 10;
 			borrow = 1;
-			data->Result[i] = data->Result[i] + 10;
 		}
 	}
+	
 	//A是否比B大
-	if (data->Result[0] == 9) 
+	if (TestResult[0] == 9)
 	{//否 A比B小
-		cout << "絕對值比較 A比B小" << endl;
+//		cout << "絕對值比較 A比B小" << endl;
+		//for (int i = SIZE - 1; i >= 0; i--) TestResult[i] = 0;
 		return false;
 	}
 	else
 	{//是 A比B大
-		cout << "絕對值比較 A比B大" << endl;
+//		cout << "絕對值比較 A >= B" << endl;
+		//for (int i = SIZE - 1; i >= 0; i--) TestResult[i] = 0;
 		return true;
 	}
 }
+
+
 void Add(BigNumber* data) {
 	if (data->isPositiveInt_1 == true && data->isPositiveInt_2 == true) 
 	{	//Test後OK
@@ -190,16 +200,58 @@ void Subtract(BigNumber* data) {
 	}
 }
 
+void PrintBeforeOperate(BigNumber* data) {
 
+	cout << "輸入數1 : " << endl;
+	int flag = 0;
+	if (data->isPositiveInt_1 == false) cout << "-";
+	for (int i = 0; i < SIZE; i++) {
+
+		//用flag處理前面多餘的0
+		if (data->Integer1[i] != 0)
+		{
+			flag = 1;
+		} 
+
+		if (flag == 1)
+		{ 
+			cout << data->Integer1[i];
+		}
+	}
+	cout << endl;
+
+	cout << "輸入數2 : " << endl;
+	if (data->isPositiveInt_2 == false) cout << "-";
+	flag = 0;
+	for (int i = 0; i < SIZE; i++) {
+
+		//用flag處理前面多餘的0
+		if (data->Integer2[i] != 0)
+		{
+			flag = 1;
+		}
+
+		if (flag == 1)
+		{
+			cout << data->Integer2[i];
+		}
+	}
+	cout << endl;
+}
 
 int main() {
 
 	BigNumber* Data = new BigNumber;
-	AbsCompare(Data);
+
+	PrintBeforeOperate(Data);
+	
+	cout << endl;
+
 	
 	AddOperate* addFunction = new AddOperate();//加的功能 用new的
 	SubOperate* subFunction = new SubOperate();
 	MultiplyOperate* multiplyFunction = new MultiplyOperate();
+	DivideOperate* divideFunction = new DivideOperate();
 
 	/*
 	Caculator使用方法:
@@ -234,6 +286,15 @@ int main() {
 	BigNumber* Data3 = new BigNumber;
 	caculator->SetOperator(multiplyFunction);
 	caculator->SetOperatorInt(Data3);
+	caculator->Execute();
+	caculator->Show();
+
+	cout << endl;
+
+	//直式乘法
+	BigNumber* Data4 = new BigNumber;
+	caculator->SetOperator(divideFunction);
+	caculator->SetOperatorInt(Data4);
 	caculator->Execute();
 	caculator->Show();
 
